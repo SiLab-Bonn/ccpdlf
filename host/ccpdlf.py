@@ -588,7 +588,6 @@ class ccpdlfB(ccpdlf):
             elif col%4==3:
                 row=113-row
             return frame,col,row
-        
 if __name__=="__main__":
     c=ccpdlf()
     c.init()
