@@ -7,11 +7,11 @@ version : 2.0.0
 transfer_layer:
     - name  : USB
       type  : SiUsb
+      #board_id : 231
       #type : Dummy
       bit_file : ../device/bit/ccpdlf.bit
-      #bit_file : ../device/ise/ccpdlf.bit
-    - name : serial
-      type : SerialDummy
+#    - name : serial
+#      type : SerialDummy
 
 
 hw_drivers:
@@ -21,10 +21,6 @@ hw_drivers:
     base_addr : 0x00000
 
 #### FEI4 & common
-  - name      : cmd
-    type      : cmd_seq
-    interface : USB
-    base_addr : 0x10000
   - name      : sram
     type      : sram_fifo
     interface : USB
@@ -34,10 +30,6 @@ hw_drivers:
     type      : tlu
     interface : USB
     base_addr : 0x18200
-  - name      : rx_fe
-    type      : fei4_rx
-    interface : USB
-    base_addr : 0x18300
   - name      : gpio_rx
     type      : gpio
     interface : USB
@@ -69,12 +61,16 @@ hw_drivers:
     type      : pulse_gen
     interface : USB
     base_addr : 0x18C50
+  - name      : CCPD_PULSE_THON
+    type      : pulse_gen
+    interface : USB
+    base_addr : 0x18C60
     
 ### additional equipments
-  - name      : PULSER
-    type      : agilent33250a
-    interface : serial
-    port : \\.\COM13
+#  - name      : PULSER
+#    type      : agilent33250a
+#    interface : serial
+#    port : \\.\COM13
     
     
 user_drivers:
@@ -84,23 +80,20 @@ registers:
     type        : StdRegister
     hw_driver   : gpio_rx
     size        : 8
-    fields:
-      - name    : EX_SEL
-        size    : 1
-        offset  : 5
-      - name    : HITMON_SEL
+    fields :
+      - name    : NC1
         size    : 1
         offset  : 4
-      - name    : CCPD_RX
+      - name    : NC
         size    : 1
         offset  : 3
       - name    : CCPD_TDC
         size    : 1
         offset  : 2
-      - name    : TLU
+      - name    : CCPD_RX
         size    : 1
         offset  : 1
-      - name    : FE
+      - name    : TLU
         size    : 1
         offset  : 0
 
@@ -121,53 +114,59 @@ registers:
       - name    : TEST_HIT
         size    : 1
         offset  : 3
-      - name    : TEST_LDPIX
+      - name    : GATE_NEG
         size    : 1
         offset  : 4
-      - name    : RESET
+      - name    : THON_NEG
         size    : 1
         offset  : 5
-
-  - name        : CCPD_Vdda
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [value]
-    arg_add     : {'channel': 'PWR0'}
-
-  - name        : V_in
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [value]
-    arg_add     : {'channel': 'PWR1'}
+      - name    : NC
+        size    : 1
+        offset  : 6
+      - name    : NC1
+        size    : 1
+        offset  : 6
 
   - name        : CCPD_vddaPRE
     type        : FunctionalRegister
     hw_driver   : GPAC
     arg_names   : [value]
+    arg_add     : {'channel': 'PWR0'}
+
+  - name        : CCPD_Vdda
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [value]
+    arg_add     : {'channel': 'PWR1'}
+
+  - name        : CCPD_vddd
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [value]
     arg_add     : {'channel': 'PWR2'}
     
-  - name        : CCPD_vddd
+  - name        : CCPD_VCasc
     type        : FunctionalRegister
     hw_driver   : GPAC
     arg_names   : [value]
     arg_add     : {'channel': 'PWR3'}
     
-  - name        : CCPD_VCasc
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'VSRC0'}
-  - name        : CCPD_PCBTH
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'VSRC1'}
   - name        : CCPD_BL
     type        : FunctionalRegister
     hw_driver   : GPAC
     arg_names   : [ value ]
-    arg_add     : { 'channel': 'VSRC2'}
+    arg_add     : { 'channel': 'VSRC0'}
   - name        : CCPD_TH
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'VSRC1'}
+  - name        : CCPD_PCBTH
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'VSRC2'}
+  - name        : CCPD_ADCref
     type        : FunctionalRegister
     hw_driver   : GPAC
     arg_names   : [ value ]
@@ -184,61 +183,66 @@ registers:
     arg_names   : [ value ]
     arg_add     : { 'channel': 'INJ0'}
 
-  - name        : probeVN
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC0'}
-  - name        : probeVPLoad
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC1'}
-  - name        : probeVPFB
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC2'}
-  - name        : probeVNFoll
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC3'}
-  - name        : probeBLRes
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC4'}
-  - name        : probeIComp
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC5'}
-  - name        : probeVSTRETCH
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC6'}
-  - name        : probeWGT0
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC7'}
-  - name        : probeWGT1
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC8'}
-  - name        : probeWGT2
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC9'}
   - name        : probeLSBdacL
     type        : FunctionalRegister
     hw_driver   : GPAC
     arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC0'}
+  - name        : probeWGT2
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC1'}
+  - name        : probeWGT0
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC2'}
+  - name        : probeWGT1
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC3'}
+  - name        : probeVSTRETCH
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC4'}
+  - name        : probePBias
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC5'}
+  - name        : probeIComp
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC6'}
+  - name        : probeBLRes
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC7'}
+  - name        : probeVPFB
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC8'}
+  - name        : probeVNFoll
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC9'}
+  - name        : probeVPLoad
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
     arg_add     : { 'channel': 'ISRC10'}
+  - name        : probeVN
+    type        : FunctionalRegister
+    hw_driver   : GPAC
+    arg_names   : [ value ]
+    arg_add     : { 'channel': 'ISRC11'}
 
 
   - name        : CCPD_SR
@@ -249,7 +253,6 @@ registers:
         - name     : BLRes
           size     : 6
           offset   : 5
-          #bit_order: [2,0,1,3,4,5]
         - name     : VN
           size     : 6
           offset   : 11
