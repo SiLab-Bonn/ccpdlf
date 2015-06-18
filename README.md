@@ -15,10 +15,10 @@ https://github.com/SiLab-Bonn/ccpdlf
 ```python
 import ccpdlf
 c=ccpdlf.ccpdlf()
-c.init()
 ```
 - call functions
 ```python
 c.set_global(VN=2)
+c.scan_tdc()
 etc..
 ```
