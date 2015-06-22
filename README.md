@@ -1,4 +1,8 @@
 # ccpdlf
+## branches
+- master : Malte's PCB v1.1
+- th_sw : PCB for threshold switching
+- cppm : firmware and software costmized for CPPM
 ## installation
 - install anaconda python
 https://store.continuum.io/cshop/anaconda/
@@ -15,10 +19,10 @@ https://github.com/SiLab-Bonn/ccpdlf
 ```python
 import ccpdlf
 c=ccpdlf.ccpdlf()
-c.init()
 ```
 - call functions
 ```python
 c.set_global(VN=2)
+c.scan_tdc()
 etc..
 ```
