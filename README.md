@@ -1,4 +1,8 @@
 # ccpdlf
+## branches
+- master : Malte's PCB v1.1
+- th_sw : PCB for threshold switching
+- cppm : firmware and software costmized for CPPM
 ## installation
 - install anaconda python
 https://store.continuum.io/cshop/anaconda/
@@ -8,6 +12,10 @@ https://silab-redmine.physik.uni-bonn.de/projects/pysilibusb/wiki
 https://github.com/SiLab-Bonn/basil
 - get a copy of ccpdlf
 https://github.com/SiLab-Bonn/ccpdlf
+- modify ipython.bat or ipython.sh
+```sh
+<path to ipython> qtconsole --matplotlib=inline --autocall=2
+```
 
 ## quick start
 - run ipython.bat or ipython.sh
@@ -15,10 +23,10 @@ https://github.com/SiLab-Bonn/ccpdlf
 ```python
 import ccpdlf
 c=ccpdlf.ccpdlf()
-c.init()
 ```
 - call functions
 ```python
 c.set_global(VN=2)
+c.scan_tdc()
 etc..
 ```
