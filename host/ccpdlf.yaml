@@ -72,7 +72,6 @@ hw_drivers:
 #    interface : serial
 #    port : \\.\COM13
     
-    
 user_drivers:
 
 registers:
@@ -183,66 +182,12 @@ registers:
     arg_names   : [ value ]
     arg_add     : { 'channel': 'INJ0'}
 
-  - name        : probeLSBdacL
-    type        : FunctionalRegister
+  - name        : CCPD_NTC
+    type        : NTCRegister
+    NTC_type    : TDK_NTCG16H
     hw_driver   : GPAC
     arg_names   : [ value ]
     arg_add     : { 'channel': 'ISRC0'}
-  - name        : probeWGT2
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC1'}
-  - name        : probeWGT0
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC2'}
-  - name        : probeWGT1
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC3'}
-  - name        : probeVSTRETCH
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC4'}
-  - name        : probePBias
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC5'}
-  - name        : probeIComp
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC6'}
-  - name        : probeBLRes
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC7'}
-  - name        : probeVPFB
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC8'}
-  - name        : probeVNFoll
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC9'}
-  - name        : probeVPLoad
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC10'}
-  - name        : probeVN
-    type        : FunctionalRegister
-    hw_driver   : GPAC
-    arg_names   : [ value ]
-    arg_add     : { 'channel': 'ISRC11'}
 
 
   - name        : CCPD_SR
