@@ -12,6 +12,10 @@ https://silab-redmine.physik.uni-bonn.de/projects/pysilibusb/wiki
 https://github.com/SiLab-Bonn/basil
 - get a copy of ccpdlf
 https://github.com/SiLab-Bonn/ccpdlf
+- modify ipython.bat or ipython.sh
+```sh
+<path to ipython> qtconsole --matplotlib=inline --autocall=2
+```
 
 ## quick start
 - run ipython.bat or ipython.sh
