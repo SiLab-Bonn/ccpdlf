@@ -872,10 +872,13 @@ class ccpdlf():
         i=0
         while i <n:
             d=self.analyse_hit(self.get_hit(),"zs")
+            self.logger.info("%f,%d"%(i,len(d)))
             if self.plot==True:
+                for col in range(24):
+                    for row in range(114):
+                        img[col,row]=img[col,row]+len(d[np.bitwise_and(d[:,1]==col,d[:,2]==row)])
                 ax[0].pcolor(d,vmin=0)
                 plt.pause(0.001)
-            self.logger.info("%f,%d"%(i,len(d)))
             if save==True:
                 with open(fname,"ab+") as f:
                     np.save(f,d)
