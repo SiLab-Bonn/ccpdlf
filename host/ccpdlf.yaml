@@ -8,8 +8,9 @@ transfer_layer:
     - name  : USB
       type  : SiUsb
       #board_id : 231
+      #board_id : 106
       #type : Dummy
-      bit_file : ../device/bit/ccpdlf.bit
+      bit_file : ../device/bit/ccpdlf_thsw.bit
 #    - name : serial
 #      type : SerialDummy
 
@@ -34,6 +35,16 @@ hw_drivers:
     type      : gpio
     interface : USB
     base_addr : 0x18800
+#### adc
+#  - name      : SPI_FADC
+#    type      : spi
+#    interface : USB
+#    base_addr : 0x18840
+#    mem_bytes : 2
+#  - name      : fadc0_rx
+#    type      : fadc_rx
+#    interface : USB
+#    base_addr : 0x18870
 
 #### ccpd
   - name      : ccpd_spi
@@ -72,7 +83,10 @@ hw_drivers:
 #    interface : serial
 #    port : \\.\COM13
     
-user_drivers:
+#user_drivers:
+#  - name      : fadc_conf
+#    type      : FadcConf
+#    hw_driver : SPI_FADC
 
 registers:
   - name        : rx
@@ -82,8 +96,11 @@ registers:
     fields :
       - name    : NC1
         size    : 1
-        offset  : 4
+        offset  : 5
       - name    : NC
+        size    : 1
+        offset  : 4
+      - name    : CCPD_ADC
         size    : 1
         offset  : 3
       - name    : CCPD_TDC
@@ -95,6 +112,10 @@ registers:
       - name    : TLU
         size    : 1
         offset  : 0
+
+#  - name        : CCPD_AMPOUT
+#    type        : FunctionalRegister
+#    hw_driver   : fadc0_rx
 
   - name        : CCPD_SW
     type        : StdRegister
@@ -119,12 +140,12 @@ registers:
       - name    : THON_NEG
         size    : 1
         offset  : 5
-      - name    : NC
+      - name    : EXT_START_TLU
         size    : 1
         offset  : 6
       - name    : NC1
         size    : 1
-        offset  : 6
+        offset  : 7
 
   - name        : CCPD_vddaPRE
     type        : FunctionalRegister
@@ -184,7 +205,8 @@ registers:
 
   - name        : CCPD_NTC
     type        : NTCRegister
-    NTC_type    : TDK_NTCG16H
+#    type        : FunctionalRegister
+#    NTC_type    : TDK_NTCG16H
     hw_driver   : GPAC
     arg_names   : [ value ]
     arg_add     : { 'channel': 'ISRC0'}
