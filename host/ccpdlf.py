@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import bitarray
 import logging
 
-sys.path.append(r"D:\workspace\basil\v2.4.0")
-
 from basil.dut import Dut
 
 class ccpdlf():
