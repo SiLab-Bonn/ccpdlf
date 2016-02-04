@@ -9,33 +9,20 @@ transfer_layer:
       type  : SiUsb
       #type : Dummy
       bit_file : ../device/bit/ccpdlf.bit
-    - name : serial
-      type : SerialDummy
 
 hw_drivers:
   - name      : GPAC
     type      : GPAC
     interface : USB
     base_addr : 0x00000
+    no_calibration : True
 
 #### FEI4 & common
-  - name      : cmd
-    type      : cmd_seq
-    interface : USB
-    base_addr : 0x10000
   - name      : sram
     type      : sram_fifo
     interface : USB
     base_addr : 0x18100
     base_data_addr : 0x0001000000000000
-  - name      : tlu
-    type      : tlu
-    interface : USB
-    base_addr : 0x18200
-  - name      : rx_fe
-    type      : fei4_rx
-    interface : USB
-    base_addr : 0x18300
   - name      : gpio_rx
     type      : gpio
     interface : USB
@@ -67,12 +54,6 @@ hw_drivers:
     type      : pulse_gen
     interface : USB
     base_addr : 0x18C50
-    
-### additional equipments
-#  - name      : PULSER
-#    type      : agilent33250a
-#    interface : serial
-#    port : \\.\COM13
     
     
 user_drivers:

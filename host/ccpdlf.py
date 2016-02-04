@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import bitarray
 import logging
 
+sys.path.append(r"D:\workspace\basil\v2.4.0")
+
 from basil.dut import Dut
 
 class ccpdlf():
@@ -65,7 +67,7 @@ class ccpdlf():
                 pass
 
     def power(self,pwr_en=True,Vdda=1.8,Vddp=1.5,Vddd=1.8,VCasc=1.0,BL=0.75,TH=0.80,PCBTH=1.3):    
-        self.dut['CCPD_Vdda'].set_current_limit(1000, unit='mA')
+        self.dut['CCPD_Vdda'].set_current_limit(250,unit="raw")
         
         self.dut['CCPD_Vdda'].set_voltage(Vdda, unit='V')
         self.dut['CCPD_Vdda'].set_enable(pwr_en)
